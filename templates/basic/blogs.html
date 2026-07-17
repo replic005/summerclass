@@ -7,7 +7,7 @@
     <header>
       <nav>
         <a href="/">Home</a> | <a href="/products/">Products</a> |
-        <a href="/blogs/">Blogs</a>
+        <a href="/blog/">Blogs</a>
       </nav>
       <hr />
     </header>
@@ -15,7 +15,7 @@
     <h1>All Blog Posts</h1>
     <ul>
       {% for blog in blogs %}
-      <li><a href="/blogs/{{ blog.id }}/">{{ blog.title }}</a></li>
+      <li><a href="/blog/{{ blog.id }}/">{{ blog.title }}</a></li>
       {% endfor %}
     </ul>
     <hr />

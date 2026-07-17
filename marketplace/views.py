@@ -5,9 +5,9 @@ from blog.models import blog
 
 def home(request):
     products = product.objects.all()
-    blogs = blog.objects.all().order_by('-published_date')
+    blogs = blog.objects.all()
     
-    return render(request, 'home/home.html', {
+    return render(request, 'basic/home.html', {
         'products': products,
         'blogs': blogs,
     })
