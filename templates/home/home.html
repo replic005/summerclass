@@ -3,6 +3,21 @@
 {% block content %}
 <h2>Our Products</h2>
 {% for product in products %}
+<div class="prodict_image">
+    {if product.product_image %}
+    <img 
+        src="{{ product.product_image.url }}" 
+        class="card_img-top"
+        alt="{{ product.name }}"
+    />
+    {% else %}
+    <img
+        src="{% static 'images/default_product_image.jpg' %}" 
+        class="card_img-top"
+        alt="{{ product.name }}"
+    />
+    {% endif %}
+</div>
 <div class="product-card">
     <a href="{% url 'product_detail' product.id %}">
         {{ product.name }}
