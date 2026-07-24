@@ -6,4 +6,4 @@ from .models import Page
 
 def page_detail(request, slug):
     page = get_object_or_404(Page, slug=slug)
-    return render(request, 'pages/page_details.html', {'page': page})
+    return render(request, 'templates copy/pages/page_details.html', {'page': page})
