@@ -7,7 +7,7 @@ def home(request):
     products = product.objects.all()
     blogs = blog.objects.all().order_by('-published_date')
     
-    return render(request, 'templates copy/home/home1.html', {
+    return render(request, 'new_design/home.html', {
         'products': products,
         'blogs': blogs,
     })

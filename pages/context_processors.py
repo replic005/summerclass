@@ -1,5 +1,7 @@
 from .models import Page
 
-def page_links(request):
+def pages_links(request):
     pages = Page.objects.all()
-    return {'pages': pages}
+    return {
+        'pages_links': pages
+    }
