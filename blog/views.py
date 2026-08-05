@@ -4,8 +4,8 @@ from .models import blog
 # blog/views.py
 def blog_list(request):
     blogs = blog.objects.all()
-    return render(request, 'templates copy/blogs/blogs1.html', {'blogs': blogs})
+    return render(request, 'blog/blog.html', {'blogs': blogs})
 
 def blog_detail(request, id):
     blog_post = get_object_or_404(blog, id=id)
-    return render(request, 'templates copy/blogs/details1.html', {'blog_post': blog_post})
+    return render(request, 'blog/blog_detail.html', {'blog_post': blog_post})
