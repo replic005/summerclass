@@ -27,7 +27,11 @@ SECRET_KEY = 'django-insecure-usn)x2s(#kr@@)hzcl5p1ivhqe-r79qo93efggu_a=7*uw%@%x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'summerclass-706s.onrender.com',
+    '127.0.0.1',
+    'localhost',
+]
 
 
 
@@ -135,3 +139,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://summerclass-706s.onrender.com',
+]
