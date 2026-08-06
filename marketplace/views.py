@@ -7,7 +7,7 @@ def home(request):
     products = product.objects.all()
     blogs = blog.objects.all()
     
-    return render(request, 'home/home.html', {
+    return render(request, 'new_design/home.html', {
         'products': products,
         'blogs': blogs,
     })
