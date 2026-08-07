@@ -29,8 +29,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'summerclass-706s.onrender.com',
+    'riplikbade.com.np',
+    'www.riplikbade.com.np',
     '127.0.0.1',
     'localhost',
+
 ]
 
 
@@ -142,4 +145,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 CSRF_TRUSTED_ORIGINS = [
     'https://summerclass-706s.onrender.com',
+    'https://riplikbade.com.np',
+    'https://www.riplikbade.com.np',
 ]
