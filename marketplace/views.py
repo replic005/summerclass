@@ -16,8 +16,8 @@ from blog.models import blog
 
 def home(request):
     products = product.objects.filter(status=True)
-    categories = category.objects.filter(status=True)
-    blogs = blog.objects.filter(status=True)
+    categories = category.objects.all()
+    blogs = blog.objects.all()
 
     context = {
         'products': products,
