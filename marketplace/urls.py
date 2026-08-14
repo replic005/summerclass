@@ -23,6 +23,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('products/', include('products.urls')),
     path('blog/', include('blog.urls')),
+    #path('store/', include('store.urls')),
 
     # --- accounts: managed directly here, no separate accounts app ---
     path('accounts/login/', views.user_login, name='user_login'),
@@ -34,7 +35,6 @@ urlpatterns = [
     path('accounts/edit-profile/', views.edit_profile, name='edit_profile'),
     path("accounts/my-products/", views.my_products, name="my_products"),
     path("accounts/product/<int:product_id>/edit/", views.edit_product, name="edit_product"),
-    # path("accounts/product/<int:product_id>/delete/", views.delete_product, name="delete_product"),
     path("accounts/add-product/", views.add_product, name="add_product"),
 
     path('accounts/my-orders/', views.my_orders, name='my_orders'),
@@ -47,7 +47,7 @@ urlpatterns = [
     path('accounts/reset-password/', views.reset_password, name='reset_password'),
 
     path('accounts/change-password/', views.change_password, name='change_password'),
-    path('accounts/my-requests-sent/', views.my_requests_sent, name='my_requests_sent'),
-    path("accounts/my-requests-received/", views.my_requests_received, name="my_requests_received"),
+    #path('accounts/my-requests-sent/', views.my_requests_sent, name='my_requests_sent'),
+    #path("accounts/my-requests-received/", views.my_requests_received, name="my_requests_received"),
 
 ]
