@@ -1,11 +1,31 @@
 {% extends 'master/base.html' %}
-{% block title %}{{ product.name }} Details{% endblock %}
+{% block title %}{{ get_product.name }} Details{% endblock %}
 
-{%block content %}
-<h2>{{ get_product.name }}</h2>
-<p><strong>Description:</strong> {{ get_product.description }}</p>
-<p><strong>Price:</strong> Rs. {{ get_product.price }}</p>
-<p> <strong>Stock:</strong> {{ get_product.stock }}</p>
+{% block content %}
+<div class="row">
+    <div class="col-md-5">
+        {% if get_product.product_image %}
+        <img src="{{ get_product.product_image.url }}" class="img-fluid rounded" alt="{{ get_product.name }}">
+        {% endif %}
+    </div>
+    <div class="col-md-7">
+        <h2>{{ get_product.name }}</h2>
+        <p class="text-muted">{{ get_product.category.name }}</p>
+        <p>{{ get_product.description }}</p>
+        <p class="fs-4 fw-bold">Rs. {{ get_product.price }}</p>
 
-<a href="{% url 'home' %}"> -Back to Products</a>
+        {% if get_product.stock > 0 %}
+        <span class="badge bg-success mb-3">In stock ({{ get_product.stock }} available)</span>
+        {% else %}
+        <span class="badge bg-danger mb-3">Out of stock</span>
+        {% endif %}
+
+        <div class="d-flex gap-2">
+            {% if get_product.stock > 0 %}
+            <a href="{% url 'add_cart' get_product.id %}" class="btn btn-primary">Add to Cart</a>
+            {% endif %}
+            <a href="{% url 'products' %}" class="btn btn-outline-secondary">Back to Products</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

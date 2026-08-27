@@ -321,8 +321,8 @@
                   method="POST"
                   enctype="multipart/form-data"
                 >
-                <input type="hidden" name="csrfmiddlewaretoken" value="bZZ9qUDXjmFhduT4QBo8EFeHzQuXmGtVPhjbwPDl1mVnkInQR3OXoSFN1ob3W62Q">
-                  <div class="form-row">
+                {% csrf_token %}
+        <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="id_first_name">First name:</label> <input type="text" name="first_name" value="Riplik" maxlength="500" class="form-control" required id="id_first_name">
                     </div>

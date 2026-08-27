@@ -221,7 +221,7 @@
     <section class="section-name padding-y-sm">
       <div class="container">
         <header class="section-heading">
-          <a href="./store.html" class="btn btn-outline-primary float-right"
+          <a href="{% url 'products' %}" class="btn btn-outline-primary float-right"
             >See all</a
           >
           <h3 class="section-title">Popular products</h3>
@@ -229,20 +229,31 @@
         <!-- sect-heading -->
 
         <div class="row">
+          {% for product in products %}
           <div class="col-md-3">
             <div class="card card-product-grid">
-              <a href="./product-detail.html" class="img-wrap">
-                <img src="{{ product.image.url }}" />
+              <a href="{% url 'product_detail' product.id %}" class="img-wrap">
+                {% if product.product_image %}
+                <img src="{{ product.product_image.url }}" />
+                {% endif %}
               </a>
               <figcaption class="info-wrap">
-                <a href="{{ product.get_url }}" class="title"
+                <a href="{% url 'product_detail' product.id %}" class="title"
                   >{{ product.name }}
                   </a>
                 <div class="price mt-1">RS. {{ product.price }}</div>
+                {% if product.stock > 0 %}
+                <small class="text-success d-block">In stock</small>
+                {% else %}
+                <small class="text-danger d-block">Out of stock</small>
+                {% endif %}
                 <!-- price-wrap.// -->
               </figcaption>
             </div>
           </div>
+          {% empty %}
+          <p class="text-muted px-3">No products available yet.</p>
+          {% endfor %}
 
         </div>
         <!-- row.// -->

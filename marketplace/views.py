@@ -5,9 +5,36 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.db import models
 
 from products.models import category, product
 from blog.models import blog
+
+
+# =========================
+# SEARCH
+# =========================
+
+def product_search(request):
+    keyword = request.GET.get('keyword', '').strip()
+
+    results = product.objects.filter(status=True)
+    if keyword:
+        results = results.filter(
+            models.Q(name__icontains=keyword) |
+            models.Q(description__icontains=keyword)
+        )
+
+    categories = category.objects.all()
+
+    context = {
+        'products': results,
+        'categories': categories,
+        'keyword': keyword,
+        'selected_category': '',
+    }
+    return render(request, 'products/products.html', context)
+
 
 
 # =========================
@@ -34,8 +61,13 @@ def home(request):
 
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
+
+        username = None
+        existing = User.objects.filter(email=email).first()
+        if existing is not None:
+            username = existing.username
 
         user = authenticate(
             request,
@@ -47,9 +79,9 @@ def user_login(request):
             login(request, user)
             return redirect('home')
 
-        messages.error(request, 'Invalid username or password.')
+        messages.error(request, 'Invalid email or password.')
 
-    return render(request, 'accounts/login.html')
+    return render(request, 'new_design/signin.html')
 
 
 # =========================
@@ -58,31 +90,35 @@ def user_login(request):
 
 def user_register(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
         email = request.POST.get('email')
+        phone_number = request.POST.get('phone_number')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
-        if not username or not email or not password:
+        if not first_name or not email or not password:
             messages.error(request, 'Please fill in all required fields.')
-            return render(request, 'accounts/register.html')
+            return render(request, 'new_design/register.html')
 
         if password != confirm_password:
             messages.error(request, 'Passwords do not match.')
-            return render(request, 'accounts/register.html')
-
-        if User.objects.filter(username=username).exists():
-            messages.error(request, 'Username already exists.')
-            return render(request, 'accounts/register.html')
+            return render(request, 'new_design/register.html')
 
         if User.objects.filter(email=email).exists():
             messages.error(request, 'Email already exists.')
-            return render(request, 'accounts/register.html')
+            return render(request, 'new_design/register.html')
+
+        # The site logs in with email, but Django's User model needs a
+        # username. Use the email as the username since it's unique.
+        username = email
 
         User.objects.create_user(
             username=username,
             email=email,
-            password=password
+            password=password,
+            first_name=first_name,
+            last_name=last_name or '',
         )
 
         messages.success(
@@ -92,7 +128,7 @@ def user_register(request):
 
         return redirect('user_login')
 
-    return render(request, 'accounts/register.html')
+    return render(request, 'new_design/register.html')
 
 
 # =========================
@@ -106,7 +142,7 @@ def user_logout(request):
 
 @login_required(login_url='user_login')
 def user_dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+    return render(request, 'account/dashboard.html')
 
 
 @login_required(login_url='user_login')
@@ -135,7 +171,7 @@ def edit_profile(request):
 
     return render(
         request,
-        'accounts/edit_profile.html',
+        'account/profile.html',
         {'user': user}
     )
 
@@ -152,7 +188,7 @@ def my_products(request):
 
     return render(
         request,
-        'accounts/my_products.html',
+        'account/myproducts.html',
         {'products': products}
     )
 
@@ -187,7 +223,7 @@ def edit_product(request, product_id):
 
     return render(
         request,
-        'accounts/edit_product.html',
+        'account/addproducts.html',
         {
             'product': item,
             'categories': categories,
@@ -219,7 +255,7 @@ def add_product(request):
 
             return render(
                 request,
-                'accounts/add_product.html',
+                'account/addproducts.html',
                 {'categories': categories}
             )
 
@@ -237,7 +273,7 @@ def add_product(request):
 
     return render(
         request,
-        'accounts/add_product.html',
+        'account/addproducts.html',
         {'categories': categories}
     )
 
@@ -250,7 +286,7 @@ def add_product(request):
 def my_orders(request):
     return render(
         request,
-        'accounts/my_orders.html',
+        'account/my-orders.html',
         {'orders': []}
     )
 
@@ -263,7 +299,7 @@ def my_orders(request):
 def order_detail(request, order_id):
     return render(
         request,
-        'accounts/order_detail.html',
+        'account/placeorder.html',
         {'order_id': order_id}
     )
 
@@ -276,7 +312,7 @@ def order_detail(request, order_id):
 def my_sales(request):
     return render(
         request,
-        'accounts/my_sales.html',
+        'account/selllerprofile.html',
         {'sales': []}
     )
 
@@ -316,7 +352,7 @@ def forgot_password(request):
             'No account was found with this email.'
         )
 
-    return render(request, 'accounts/forgot_password.html')
+    return render(request, 'account/forgot_password.html')
 
 
 # =========================
@@ -333,7 +369,7 @@ def reset_password(request):
             messages.error(request, 'Passwords do not match.')
             return render(
                 request,
-                'accounts/reset_password.html'
+                'account/reset_password.html'
             )
 
         try:
@@ -342,7 +378,7 @@ def reset_password(request):
             messages.error(request, 'User not found.')
             return render(
                 request,
-                'accounts/reset_password.html'
+                'account/reset_password.html'
             )
 
         user.set_password(password)
@@ -355,7 +391,7 @@ def reset_password(request):
 
         return redirect('user_login')
 
-    return render(request, 'accounts/reset_password.html')
+    return render(request, 'account/reset_password.html')
 
 
 # =========================
@@ -390,6 +426,6 @@ def change_password(request):
 
     return render(
         request,
-        'accounts/change_password.html',
+        'account/password.html',
         {'form': form}
     )

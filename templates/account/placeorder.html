@@ -348,8 +348,8 @@
             </p>
             
             <form method="post" action="/orders/esewa/start/6/">
-              <input type="hidden" name="csrfmiddlewaretoken" value="AI6lIJ5WwfyAOdVaRB8TfpJ33EJ5zlple0qnOE5kefOGVrpWS3yIZCa9vcqb9LYg">
-              <button class="btn btn-primary btn-block">Pay with eSewa</button>
+              {% csrf_token %}
+        <button class="btn btn-primary btn-block">Pay with eSewa</button>
             </form>
           </div>
           <!-- card-body.// -->

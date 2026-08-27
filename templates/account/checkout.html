@@ -252,9 +252,9 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title mb-4">Billing Address</h4>
-            <form action="/orders/place-order/" method="POST">
-              <input type="hidden" name="csrfmiddlewaretoken" value="n3BQE3nVvLru47OQ5bqDf5V15MzUtaBr1lVSKYnjdLHAbliC6DQsZim7xkg03Aam">
-              <div class="form-row">
+            <form action="{% url 'checkout' %}" method="POST">
+              {% csrf_token %}
+        <div class="form-row">
                 <div class="col form-group">
                   <label for="">First Name</label>
                   <input
@@ -367,39 +367,48 @@
                 </tr>
               </thead>
              <tbody>
-              
+              {% for item in cart_items %}
               <tr>
                 <td>
                   <figure class="itemside align-items-center">
                     <div class="aside">
-                      <img src="/media/photos/products/jackets_u9PAWlb.jpeg" class="img-sm" />
+                      {% if item.product.product_image %}
+                      <img src="{{ item.product.product_image.url }}" class="img-sm" />
+                      {% endif %}
                     </div>
                     <figcaption class="info">
-                      <a href="/store/category/jackets/classic-denim-jacket/" class="title text-dark">
-                        Classic Denim Jacket
-                        </a>
-                        
-                      <p class="text-muted small">
-                        
-                      </p>
+                      <a href="{% url 'product_detail' item.product.id %}" class="title text-dark">
+                        {{ item.product.name }}
+                      </a>
+                      <p class="text-muted small"></p>
                     </figcaption>
                   </figure>
                 </td>
                 <td>
-                 <label> 1 </label>
+                 <label> {{ item.quantity }} </label>
                 </td>
                 <td>
                   <div class="price-wrap">
-                    <var class="price">Rs. 400</var>
-                    <small class="text-muted"> Rs. 400 each </small>
+                    <var class="price">Rs. {{ item.item_total }}</var>
+                    <small class="text-muted"> Rs. {{ item.product.price }} each </small>
                   </div>
-                  <!-- price-wrap .// -->
                 </td>
-               
               </tr>
-           
+              {% endfor %}
             </tbody>
             </table>
+            <dl class="dlist-align mt-3">
+              <dt>Total price:</dt>
+              <dd class="text-right">Rs. {{ subtotal }}</dd>
+            </dl>
+            <dl class="dlist-align">
+              <dt>Tax:</dt>
+              <dd class="text-right">Rs. {{ tax }}</dd>
+            </dl>
+            <dl class="dlist-align">
+              <dt>Grand Total:</dt>
+              <dd class="text-right text-dark b"><strong>Rs. {{ grand_total }}</strong></dd>
+            </dl>
 
             <button
               type="submit"
@@ -407,7 +416,7 @@
               class="btn btn-primary btn-block">
               Place Order
             </button>
-            <a href="/store/" class="btn btn-light btn-block"
+            <a href="{% url 'products' %}" class="btn btn-light btn-block"
               >Continue Shopping</a
             >
           </div>

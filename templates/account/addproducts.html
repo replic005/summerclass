@@ -314,9 +314,8 @@
             
 
             <form method="POST" enctype="multipart/form-data">
-              <input type="hidden" name="csrfmiddlewaretoken" value="cyrXaDYXvzqZoHgfXzyCmIqZwjcbzuqDQQLZgyYldzG5vVK1Y1Yr6VR5YRTh9UZy">
-
-              <div class="form-row">
+              {% csrf_token %}
+        <div class="form-row">
                 <div class="form-group col-md-12">
                   <label for="id_product_name">Product name:</label> <input type="text" name="product_name" maxlength="200" class="form-control" required id="id_product_name">
                   

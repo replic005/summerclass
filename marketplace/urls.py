@@ -23,7 +23,9 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('products/', include('products.urls')),
     path('blog/', include('blog.urls')),
-    #path('store/', include('store.urls')),
+    path('pages/', include('pages.urls')),
+    path('cart/', include('cart.urls')),
+    path('store/search/', views.product_search, name='product_search'),
 
     # --- accounts: managed directly here, no separate accounts app ---
     path('accounts/login/', views.user_login, name='user_login'),
