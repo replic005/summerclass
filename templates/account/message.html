@@ -1,397 +1,51 @@
-
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <meta http-equiv="cache-control" content="max-age=604800" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-
-    <title>Islington Marketplace | Islington Shopping Platform</title>
-    <meta name="description" content="Islington MarketPlace">
-    <meta name="keywords" content="Islington MarketPlace, Islington">
-
-    
-    <meta property="og:image" content="/media/photos/logos/Logo_v6RgqOa.PNG">
-    
-
-    
-    <link
-      href="/media/photos/favicons/favicon_JdpId9u.ico"
-      rel="shortcut icon"
-      type="image/x-icon"
-    />
-    
-
-    <!-- Open Graph for social media -->
-    <meta property="og:title" content="Islington Marketplace | Islington Shopping Platform">
-    <meta property="og:description" content="Islington MarketPlace">
-
-    <!-- jQuery -->
-    <script
-      src="/static/js/jquery-2.0.0.min.js"
-      type="text/javascript"></script>
-
-    <!-- Bootstrap4 files-->
-    <script
-      src="/static/js/bootstrap.bundle.min.js"
-      type="text/javascript"></script>
-    <link
-      href="/static/css/bootstrap.css"
-      rel="stylesheet"
-      type="text/css"/>
-
-    <!-- Font awesome 5 -->
-    <link
-      href="/static/fonts/fontawesome/css/all.min.css"
-      type="text/css"
-      rel="stylesheet"/>
-
-    <link
-      href="/static/css/custom.css"
-      type="text/css"
-      rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- custom style -->
-    <link href="/static/css/ui.css" rel="stylesheet" type="text/css" />
-    <link
-      href="/static/css/responsive.css"
-      rel="stylesheet"
-      media="only screen and (max-width: 1200px)"/>
-
-    <!-- custom javascript -->
-    <script src="/static/js/script.js" type="text/javascript"></script>
-
-    <script type="text/javascript">
-      /// some script
-
-      // jquery ready start
-      $(document).ready(function () {
-        // jQuery code
-      });
-      // jquery end
-    </script>
-  </head>
-  <body>
-    
-<header class="section-header">
-  <nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
-    <div class="container">
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarTop4"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarTop4">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link"> English </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link"> USD </a>
-          </li>
-        </ul>
-        <ul class="navbar-nav">
-          <li>
-            <a href="#" class="nav-link">
-              <i class="fa fa-envelope"></i> Email
-            </a>
-          </li>
-          <li>
-            <a href="#" class="nav-link">
-              <i class="fa fa-phone"></i> Call us
-            </a>
-          </li>
-        </ul>
-        <!-- list-inline //  -->
-      </div>
-      <!-- navbar-collapse .// -->
+{% extends 'account/_layout.html' %}
+{% block title %}{{ thread.subject }}{% endblock %}
+{% block content %}
+<article class="card mb-3">
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <h5 class="mb-0">{{ thread.subject }}</h5>
+      <small class="text-muted">{{ thread.created_at|date:"M d, Y H:i" }}</small>
     </div>
-    <!-- container //  -->
-  </nav>
-
-  <section class="header-main border-bottom">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-2 col-md-3 col-6">
-          <a href="/" class="brand-wrap">
-            
-            <img class="logo" src="/media/photos/logos/Logo_v6RgqOa.PNG" />
-            
-          </a>
-          <!-- brand-wrap.// -->
-        </div>
-        <div class="col-lg col-sm col-md col-6 flex-grow-0">
-          <div class="category-wrap dropdown d-inline-block float-right">
-            <button
-              type="button"
-              class="btn btn-primary dropdown-toggle"
-              data-toggle="dropdown"
-            >
-              <i class="fa fa-bars"></i> All category
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="/store/"
-                >All Products
-              </a>
-              
-              <a class="dropdown-item" href="/store/category/accessories/">
-                Accessories
-              </a>
-              
-              <a class="dropdown-item" href="/store/category/books/">
-                Books
-              </a>
-              
-              <a class="dropdown-item" href="/store/category/electronics/">
-                Electronics
-              </a>
-              
-              <a class="dropdown-item" href="/store/category/shirts/">
-                Shirts
-              </a>
-              
-              <a class="dropdown-item" href="/store/category/jeans/">
-                Jeans
-              </a>
-              
-              <a class="dropdown-item" href="/store/category/shoes/">
-                Shoes
-              </a>
-              
-              <a class="dropdown-item" href="/store/category/jackets/">
-                Jackets
-              </a>
-              
-              <a class="dropdown-item" href="/store/category/home-living/">
-                Home &amp; Living
-              </a>
-              
-            </div>
-          </div>
-          <!-- category-wrap.// -->
-        </div>
-        <!-- col.// -->
-        <a href="/store/" class="btn btn-outline-primary">Store</a>
-        <div class="col-lg col-md-6 col-sm-12 col">
-          <form action="/store/search/" class="search" method="GET">
-            <div class="input-group w-100">
-              <input
-                type="text"
-                class="form-control"
-                style="width: 60%"
-                placeholder="Search"
-                name="keyword"
-              />
-
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">
-                  <i class="fa fa-search"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-          <!-- search-wrap .end// -->
-        </div>
-        <!-- col.// -->
-        <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
-          <div class="d-flex justify-content-end mb-3 mb-lg-0">
-            
-            <div class="widget-header">
-              <small class="title text-muted"
-                >Welcome Riplik!</small
-              >
-              <div>
-                <a href="/accounts/dashboard/">Dashboard</a>
-                <span class="dark-transp"> | </span>
-                <a href="/accounts/logout/"> Logout</a>
-              </div>
-            </div>
-            
-            <a href="/cart/" class="widget-header pl-3 ml-3">
-              <div class="icon icon-sm rounded-circle border">
-                <i class="fa fa-shopping-cart"></i>
-              </div>
-              <span class="badge badge-pill badge-danger notify"
-                >3</span
-              >
-            </a>
-          </div>
-          <!-- widgets-wrap.// -->
-        </div>
-        <!-- col.// -->
-      </div>
-      <!-- row.// -->
+    <div class="small text-muted mt-1">
+      From: {{ thread.sender.first_name|default:thread.sender.username }}
+      &middot; To: {{ thread.recipient.first_name|default:thread.recipient.username }}
+      {% if thread.product %}
+        &middot; Re: <a href="{% url 'product_detail' thread.product.id %}">{{ thread.product.name }}</a>
+      {% endif %}
     </div>
-    <!-- container.// -->
-  </section>
-  <!-- header-main .// -->
-</header>
-<!-- section-header.// -->
-
-    
-  
-    
-<section class="section-conten padding-y bg">
-  <div class="container">
-    <div class="row">
-      <aside class="col-md-3">
-        <ul class="list-group">
-  <a class="list-group-item " href="/accounts/dashboard/">
-    Dashboard
-  </a>
-  <a class="list-group-item "
-   href="/accounts/my-products/">
-  My Products
-  </a>
-  <a class="list-group-item "
-   href="/accounts/add-product/">
-  Add Product
-  </a>
-
-  <a class="list-group-item " href="/accounts/my-orders/">
-    My Orders
-  </a>
-    <a class="list-group-item " href="/accounts/my-sales/">
-    My Sales
-  </a>
-  <a class="list-group-item " href="/accounts/my-requests-sent/">
-    My Sent Requests
-  </a>
-  <a class="list-group-item " href="/accounts/my-requests-received/">
-    My Received Requests
-  </a>
- <a class="list-group-item "
-   href="/accounts/messages/inbox/">
-  Messages
-  
-</a>
-
-<a class="list-group-item "
-   href="/accounts/messages/sent/">
-  Sent
-</a>
-
-
-  <a class="list-group-item " href="/accounts/edit-profile/">
-    Edit Profile
-  </a>
-
-  <a class="list-group-item " href="/accounts/change-password/">
-    Change Password
-  </a>
-</ul>
-<br />
-<a class="btn btn-light btn-block" href="/accounts/logout/">
-  <i class="fa fa-power-off"></i> <span class="text">Log out</span>
-</a>
-
-      </aside>
-
-      <main class="col-md-9">
-        <article class="card mb-3">
-          <div class="card-body">
-            <div class="d-flex justify-content-between">
-              <h5 class="mb-0">hi</h5>
-              <small class="text-muted">Aug 07, 2026 02:51</small>
-            </div>
-            <div class="small text-muted mt-1">
-              From:
-              
-                Riplik Bade
-              
-              · To:
-              
-                Prasim Basnet
-              
-            </div>
-            
-            <hr/>
-            <p class="mb-0" style="white-space:pre-wrap;">qwergahofpskljhgdafsgh</p>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-body">
-            <form method="post" action="/accounts/messages/1/reply/">
-              {% csrf_token %}
-        <div class="form-group">
-                <label for="id_message">Message:</label>
-                <textarea name="message" cols="40" rows="4" class="form-control" placeholder="Your reply…" required id="id_message">
-</textarea>
-              </div>
-              <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary">Reply</button>
-              </div>
-            </form>
-          </div>
-        </article>
-
-        
-          <h6 class="mt-4">Replies</h6>
-          <div class="list-group">
-            
-              <div class="list-group-item">
-                <div class="d-flex justify-content-between">
-                  <div class="small text-muted">
-                    
-                      Prasim Basnet
-                    
-                  </div>
-                  <small class="text-muted">Aug 07, 2026 02:51</small>
-                </div>
-                <div class="mt-2" style="white-space:pre-wrap;">HLo</div>
-              </div>
-            
-          </div>
-        
-      </main>
-    </div>
+    <hr/>
+    <p class="mb-0" style="white-space:pre-wrap;">{{ thread.body }}</p>
   </div>
-</section>
- 
-    <!-- ========================= FOOTER ========================= -->
-<footer class="section-footer border-top">
-  <div class="container">
-    <section class="footer-bottom border-top row">
-      <div class="col-md-2">
-        <p class="text-muted">&copy Mohit Paudel</p>
-      </div>
-      <div class="col-md-8 text-md-center">
-        <span class="px-2">https://www.resuma.xyz/</span>
-        <span class="px-2">None</span>
-        <span class="px-2">None</span>
-      </div>
-      <div class="col-md-2 text-md-right text-muted">
-        <i class="fab fa-lg fa-cc-visa"></i>
-        <i class="fab fa-lg fa-cc-paypal"></i>
-        <i class="fab fa-lg fa-cc-mastercard"></i>
-      </div>
-    </section>
-  </div>
-  <!-- //container -->
-</footer>
-<!-- ========================= FOOTER END // ========================= -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</article>
 
-<script>
-  $(document).ready(function(){
-    $('.thumb a').click(function(e){
-      e.preventDefault();
-      $('.mainImage img').attr('src', $(this).attr("href"));
-    })
-  })
-</script>
-  </body>
-</html>
+<article class="card">
+  <div class="card-body">
+    <form method="post" action="{% url 'message_reply' thread.id %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="id_body">Message:</label>
+        <textarea name="body" rows="4" class="form-control" placeholder="Your reply&hellip;" required id="id_body"></textarea>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary">Reply</button>
+      </div>
+    </form>
+  </div>
+</article>
+
+{% if thread.replies.all %}
+<h6 class="mt-4">Replies</h6>
+<div class="list-group">
+  {% for reply in thread.replies.all %}
+  <div class="list-group-item">
+    <div class="d-flex justify-content-between">
+      <div class="small text-muted">{{ reply.sender.first_name|default:reply.sender.username }}</div>
+      <small class="text-muted">{{ reply.created_at|date:"M d, Y H:i" }}</small>
+    </div>
+    <div class="mt-2" style="white-space:pre-wrap;">{{ reply.body }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

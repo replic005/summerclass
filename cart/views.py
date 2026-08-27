@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
+from account.models import Order, OrderItem
 from products.models import product as Product
 
 from .models import CartItem
@@ -87,11 +88,43 @@ def checkout(request):
     subtotal, tax, grand_total = _cart_totals(cart_items)
 
     if request.method == 'POST':
-        # No real payment processing is wired up yet; this simply clears
-        # the cart and confirms the (mock) order was placed.
+        order = Order.objects.create(
+            buyer=request.user,
+            first_name=request.POST.get('first_name', '').strip(),
+            last_name=request.POST.get('last_name', '').strip(),
+            email=request.POST.get('email', '').strip(),
+            phone=request.POST.get('phone', '').strip(),
+            address_line_1=request.POST.get('address_line_1', '').strip(),
+            address_line_2=request.POST.get('address_line_2', '').strip(),
+            city=request.POST.get('city', '').strip(),
+            state=request.POST.get('state', '').strip(),
+            country=request.POST.get('country', '').strip(),
+            order_note=request.POST.get('order_note', '').strip(),
+            subtotal=subtotal,
+            tax=tax,
+            grand_total=grand_total,
+        )
+
+        for item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                product=item.product,
+                seller=item.product.seller,
+                product_name=item.product.name,
+                price=item.product.price,
+                quantity=item.quantity,
+            )
+            # Reduce stock now that the order has been placed.
+            if item.product.stock >= item.quantity:
+                item.product.stock -= item.quantity
+                item.product.save(update_fields=['stock'])
+
         cart_items.delete()
-        messages.success(request, 'Your order has been placed successfully.')
-        return redirect('my_orders')
+        messages.success(
+            request,
+            f'Your order #{order.order_number} has been placed successfully.',
+        )
+        return redirect('order_detail', order_id=order.id)
 
     context = {
         'cart_items': cart_items,

@@ -15,6 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, include
 from . import views
 
@@ -27,29 +29,12 @@ urlpatterns = [
     path('cart/', include('cart.urls')),
     path('store/search/', views.product_search, name='product_search'),
 
-    # --- accounts: managed directly here, no separate accounts app ---
-    path('accounts/login/', views.user_login, name='user_login'),
-    path('accounts/register/', views.user_register, name='user_register'),
-    path('accounts/logout/', views.user_logout, name='user_logout'),
-
-
-    path('accounts/dashboard/', views.user_dashboard, name='user_dashboard'),
-    path('accounts/edit-profile/', views.edit_profile, name='edit_profile'),
-    path("accounts/my-products/", views.my_products, name="my_products"),
-    path("accounts/product/<int:product_id>/edit/", views.edit_product, name="edit_product"),
-    path("accounts/add-product/", views.add_product, name="add_product"),
-
-    path('accounts/my-orders/', views.my_orders, name='my_orders'),
-    path('accounts/order-detail/<int:order_id>/', views.order_detail, name="order_detail"),
-    path('accounts/my-sales/', views.my_sales, name='my_sales'),
-    path('accounts/my-sales/<int:order_product_id>/status/', views.update_delivery_status, name='seller_update_delivery_status'),
-
-    path('accounts/forgot-password/', views.forgot_password, name='forgot_password'),
-
-    path('accounts/reset-password/', views.reset_password, name='reset_password'),
-
-    path('accounts/change-password/', views.change_password, name='change_password'),
-    #path('accounts/my-requests-sent/', views.my_requests_sent, name='my_requests_sent'),
-    #path("accounts/my-requests-received/", views.my_requests_received, name="my_requests_received"),
-
+    # --- accounts: dedicated app (login, register, dashboard, orders, sales,
+    # messages, profile, password management, ...) ---
+    path('accounts/', include('account.urls')),
 ]
+
+if settings.DEBUG:
+    # Serve user-uploaded media (product photos, avatars, payment QR codes)
+    # locally. In production this is handled by the web server/CDN instead.
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

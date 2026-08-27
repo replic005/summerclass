@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="max-age=604800" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>{% block title %}My Account{% endblock %} | Islington Marketplace</title>
+    <meta name="description" content="Islington MarketPlace">
+
+    <link href="{% static 'images/favicon_JdpId9u.ico' %}" rel="shortcut icon" type="image/x-icon" />
+
+    <script src="{% static 'js/jquery-2.0.0.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/all.min.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'css/ui.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" media="only screen and (max-width: 1200px)"/>
+    <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
+    {% block extra_head %}{% endblock %}
+  </head>
+  <body>
+
+<header class="section-header">
+  <nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTop4">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown"><a href="#" class="nav-link">English</a></li>
+          <li class="nav-item dropdown"><a href="#" class="nav-link">USD</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="header-main border-bottom">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-2 col-md-3 col-6">
+          <a href="{% url 'home' %}" class="brand-wrap">
+            <img class="logo" src="{% static 'images/Logo_v6RgqOa.PNG' %}" />
+          </a>
+        </div>
+        <div class="col-lg col-md col-sm col-6 flex-grow-0">
+          <a href="{% url 'products' %}" class="btn btn-outline-primary">Store</a>
+        </div>
+        <div class="col-lg col-md-6 col-sm-12 col">
+          <form action="{% url 'product_search' %}" class="search" method="GET">
+            <div class="input-group w-100">
+              <input type="text" class="form-control" style="width: 60%" placeholder="Search" name="keyword" />
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
+          <div class="d-flex justify-content-end mb-3 mb-lg-0">
+            <div class="widget-header">
+              <small class="title text-muted">Welcome {{ request.user.first_name|default:request.user.username }}!</small>
+              <div>
+                <a href="{% url 'user_dashboard' %}">Dashboard</a>
+                <span class="dark-transp"> | </span>
+                <a href="{% url 'user_logout' %}">Logout</a>
+              </div>
+            </div>
+            <a href="{% url 'cart' %}" class="widget-header pl-3 ml-3">
+              <div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
+              <span class="badge badge-pill badge-danger notify">{{ request.user.cart_items.count|default:0 }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</header>
+
+<section class="section-conten padding-y bg">
+  <div class="container">
+    <div class="row">
+      <aside class="col-md-3">
+        <ul class="list-group">
+          <a class="list-group-item {% if active == 'dashboard' %}active{% endif %}" href="{% url 'user_dashboard' %}">Dashboard</a>
+          <a class="list-group-item {% if active == 'myproducts' %}active{% endif %}" href="{% url 'my_products' %}">My Products</a>
+          <a class="list-group-item {% if active == 'addproduct' %}active{% endif %}" href="{% url 'add_product' %}">Add Product</a>
+          <a class="list-group-item {% if active == 'myorders' %}active{% endif %}" href="{% url 'my_orders' %}">My Orders</a>
+          <a class="list-group-item {% if active == 'mysales' %}active{% endif %}" href="{% url 'my_sales' %}">My Sales</a>
+          <a class="list-group-item {% if active == 'inbox' %}active{% endif %}" href="{% url 'messages_inbox' %}">Messages</a>
+          <a class="list-group-item {% if active == 'sent' %}active{% endif %}" href="{% url 'messages_sent' %}">Sent</a>
+          <a class="list-group-item {% if active == 'profile' %}active{% endif %}" href="{% url 'edit_profile' %}">Edit Profile</a>
+          <a class="list-group-item {% if active == 'password' %}active{% endif %}" href="{% url 'change_password' %}">Change Password</a>
+        </ul>
+        <br />
+        <a class="btn btn-light btn-block" href="{% url 'user_logout' %}">
+          <i class="fa fa-power-off"></i> <span class="text">Log out</span>
+        </a>
+      </aside>
+
+      <main class="col-md-9">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+</section>
+
+<footer class="section-footer border-top">
+  <div class="container">
+    <section class="footer-bottom border-top row">
+      <div class="col-md-2"><p class="text-muted">&copy Islington Marketplace</p></div>
+      <div class="col-md-8 text-md-center"></div>
+      <div class="col-md-2 text-md-right text-muted">
+        <i class="fab fa-lg fa-cc-visa"></i>
+        <i class="fab fa-lg fa-cc-paypal"></i>
+        <i class="fab fa-lg fa-cc-mastercard"></i>
+      </div>
+    </section>
+  </div>
+</footer>
+
+{% block extra_scripts %}{% endblock %}
+  </body>
+</html>
